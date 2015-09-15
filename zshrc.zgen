@@ -1,8 +1,10 @@
 source ${${(%):-%x}:A:h}/config
 
 if [ -r $zshd/pre ]; then; source $zshd/pre; fi
-# reset on it's own
+
+# get zgen to do our stuff
 ZGEN_RESET_ON_CHANGE=( ${HOME}/.zshrc )
+ZGEN_DIR=$zshd/zgen.conf
 
 # zgen
 source $zshd/zgen/zgen.zsh
@@ -27,6 +29,5 @@ if ! zgen saved; then
 	#save
 	zgen save
 fi
-if [ -r $zshd/post ]; then; source $zshd/post; fi
 
-if [ -r ~/.zshrc.local ]; then; source ~/.zshrc.local; fi
+if [ -r $zshd/post ]; then; source $zshd/post; fi

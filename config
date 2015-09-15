@@ -1,1 +1,3 @@
+#!/bin/zsh
+# we define stuff that can be used inside our rcs and stuff
 zshd=${${(%):-%x}:A:h}
