@@ -1,0 +1,32 @@
+source ${${(%):-%x}:A:h}/config
+
+if [ -r $zshd/pre ]; then; source $zshd/pre; fi
+# reset on it's own
+ZGEN_RESET_ON_CHANGE=( ${HOME}/.zshrc )
+
+# zgen
+source $zshd/zgen/zgen.zsh
+
+if ! zgen saved; then
+	echo "Creating a zgen save."
+
+	zgen oh-my-zsh
+
+	#plugins
+	zgen oh-my-zsh plugins/git
+	zgen oh-my-zsh plugins/sudo
+	zgen oh-my-zsh plugins/extract
+	zgen oh-my-zsh plugins/wd
+	zgen oh-my-zsh plugins/sprunge
+	zgen oh-my-zsh plugins/history-substring-search
+
+	#theme
+	zgen oh-my-zsh themes/gentoo
+	#zgen load nojhan/liquidprompt liquidprompt.plugin.zsh
+
+	#save
+	zgen save
+fi
+if [ -r $zshd/post ]; then; source $zshd/post; fi
+
+if [ -r ~/.zshrc.local ]; then; source ~/.zshrc.local; fi
