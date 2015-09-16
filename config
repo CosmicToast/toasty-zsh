@@ -2,4 +2,4 @@
 # we define stuff that can be used inside our rcs and stuff
 zshd=${${(%):-%x}:A:h}
 zrc=$HOME/.zshrc
-zrc=${zshrc:A}
+zrc=${zrc:A}
