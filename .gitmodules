@@ -1,3 +1,6 @@
 [submodule "zgen"]
 	path = zgen
 	url = https://github.com/tarjoilija/zgen
+[submodule "grml"]
+	path = grml
+	url = https://github.com/grml/grml-etc-core
