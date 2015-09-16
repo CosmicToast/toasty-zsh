@@ -11,4 +11,4 @@ function toast-zsh-resource { source $zrc }
 function toast-zsh-source { source ~/.zshrc }
 
 #easy/fast switching between different RCs, don't forget to toast-zsh-source afterwards
-function toast-zsh-switch { ln -sf $zshd/$1.zrc }
+function toast-zsh-switch { ln -sf $zshd/$1.zrc ~/.zshrc }
