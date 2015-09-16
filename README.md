@@ -12,10 +12,9 @@ I also rather disliked how having multiple zsh configs meant clottering up your 
 And thus, Toast Zsh was born.
 
 ### Basic Usage ###
-- Clone the repository somewhere into your home directory (~/.zsh is recommended).
+- Clone the repository somewhere into your home directory (~/.zsh is recommended). Use --recursive if you want to avoid initializing submodules in step 3.
 - Enter that directory.
-- Run "git submodule init".
-- Run "git submodule update".
+- Run "git submodule update --init --recursive"
 - Symlink a *.zrc file of your choosing into ~/.zshrc
 
 ### Advanced Usage ###
