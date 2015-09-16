@@ -1,3 +1,4 @@
+#!/bin/zsh
 source ${${(%):-%x}:A:h}/config
 
 if [ -r $zshd/pre ]; then; source $zshd/pre; fi
