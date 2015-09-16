@@ -12,17 +12,19 @@ I also rather disliked how having multiple zsh configs meant clottering up your 
 And thus, Toast Zsh was born.
 
 ### Basic Usage ###
-- Clone the repository somewhere into your home directory (~/.zsh is recommended). Use --recursive if you want to avoid initializing submodules in step 3.
+- Clone the repository somewhere into your home directory (~/.zsh is recommended). Use `--recursive` if you want to avoid initializing submodules in step 3.
 - Enter that directory.
-- Run "git submodule update --init --recursive"
+- Run `git submodule update --init --recursive`
 - Symlink a *.zrc file of your choosing into ~/.zshrc
+
+To update: run `toast-zsh-upgrade`.
 
 ### Advanced Usage ###
 $zshd/config Defines:
 - $zshd: the directory where Toast Zsh lives (suggested: ~/.zsh), to be used in other scripts. (PS: $0 is actually broken inside of init scripts, and resolves to /bin/zsh)
 - $zrc: the current zshrc in use, can be used by a zshrc to block sourcing itself when it isn't zshrc
 
-$zshd/pre: file that should be run before any plugin-specific configuration, good place to define functions
+$zshd/pre: file that should be run before any plugin-specific configuration, good place to define functions. Currently defines several management-related ones.
 
 $zshd/post: file that should be run after any plugin-specific configuration, good place to unhash functions and source any generic files (~/.zshrc.local, etc)
 
