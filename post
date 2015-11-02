@@ -6,7 +6,7 @@ if [ -r ~/.zshrc.local ]; then source ~/.zshrc.local; fi
 
 # zshrc.d
 if [ -d ~/.zshrc.d ]; then
-    for f in ~/.zshrc.d/*.rc
+    for f in ~/.zshrc.d/*.zrc
     do
         source $f
     done
