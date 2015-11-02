@@ -1,9 +1,6 @@
 #!/bin/zsh
 # execute after all the plugin config stuff
 
-# local zshrc
-if [ -r ~/.zshrc.local ]; then source ~/.zshrc.local; fi
-
 # zshrc.d
 if [ -d ~/.zshrc.d ]; then
     for f in ~/.zshrc.d/*.zrc
@@ -11,3 +8,6 @@ if [ -d ~/.zshrc.d ]; then
         source $f
     done
 fi
+
+# local zshrc
+if [ -r ~/.zshrc.local ]; then source ~/.zshrc.local; fi
