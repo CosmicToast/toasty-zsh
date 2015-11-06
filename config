@@ -3,3 +3,4 @@
 zshd=${${(%):-%x}:A:h}
 zrc=$HOME/.zshrc
 zrc=${zrc:A}
+: ${zd:=~/.config/zsh}

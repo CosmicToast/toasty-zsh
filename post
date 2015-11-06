@@ -1,9 +1,10 @@
 #!/bin/zsh
 # execute after all the plugin config stuff
+if [ -d $zd -a -r $zd/post ]; then source $zd/post; fi
 
 # zshrc.d
-if [ -d ~/.zshrc.d ]; then
-    for f in ~/.zshrc.d/*.zrc
+if [ -d $zd ]; then
+    for f in $zd/*.zrc
     do
         source $f
     done

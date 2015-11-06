@@ -1,7 +1,6 @@
 #!/bin/zsh
 # execute before any plugin config stuff
-
-if [ -r ~/.zshrc.pre ]; then source ~/.zshrc.pre; fi
+if [ -d $zd -a -r $zd/pre ]; then source $zd/pre; fi
 
 #upgrade function, does not to submodules: they should manage themselves
 function toast-zsh-upgrade { git -C $zshd pull }
