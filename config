@@ -1,6 +1,6 @@
 #!/bin/zsh
 # we define stuff that can be used inside our rcs and stuff
 zshd=${${(%):-%x}:A:h}
-zrc=$HOME/.zshrc
+zrc=${ZDOTDIR:-$HOME}/.zshrc
 zrc=${zrc:A}
-: ${zd:=~/.config/zsh}
+zd=${XDG_CONFIG_HOME:-$HOME/.local/share}/zsh

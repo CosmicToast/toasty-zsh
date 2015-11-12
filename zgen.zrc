@@ -4,7 +4,7 @@ source ${${(%):-%x}:A:h}/config
 if [ -r $zshd/pre ]; then; source $zshd/pre; fi
 
 # get zgen to do our stuff
-ZGEN_RESET_ON_CHANGE=( ${HOME}/.zshrc )
+ZGEN_RESET_ON_CHANGE=( ${ZDOTDIR:-$HOME}/.zshrc )
 ZGEN_DIR=$zshd/zgen.conf
 
 # zgen
