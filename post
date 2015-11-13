@@ -14,7 +14,7 @@ setopt NOMATCH
 
 # local zshrc
 if [ -d $zd -a -r $zd/zshrc.local ]; then
-    source $zd/.zshrc.local
+    source $zd/zshrc.local
 elif [ -r ${ZDOTDIR:-$HOME}/.zshrc.local ]; then
     source ${ZDOTDIR:-$HOME}/.zshrc.local
 elif [ -r ~/.zshrc.local ]; then
