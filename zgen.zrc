@@ -22,6 +22,7 @@ if ! zgen saved; then
 	zgen oh-my-zsh plugins/wd
 	zgen oh-my-zsh plugins/sprunge
 	zgen oh-my-zsh plugins/history-substring-search
+	zgen oh-my-zsh plugins/ssh-agent
 
 	#theme
 	zgen oh-my-zsh themes/gentoo
