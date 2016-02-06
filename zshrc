@@ -5,8 +5,7 @@ if [ ! -d $zshd/zgen ]; then
     git clone https://github.com/tarjoilija/zgen zgen
     echo zgen > "$zshd"/.git/info/exclude
 else
-    cd "$zshd"/zgen
-    git pull
+    git -C "${zshd}/zgen" pull
 fi
 
 if [ -r $zshd/pre ]; then; source $zshd/pre; fi
