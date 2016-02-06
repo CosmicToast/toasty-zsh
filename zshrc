@@ -2,7 +2,7 @@
 source ${${(%):-%x}:A:h}/config
 
 if [ ! -d $zshd/zgen ]; then
-    git clone https://github.com/tarjoilija/zgen zgen
+    git -C "${zshd}" clone https://github.com/tarjoilija/zgen
     echo zgen > "$zshd"/.git/info/exclude
 else
     git -C "${zshd}/zgen" pull
