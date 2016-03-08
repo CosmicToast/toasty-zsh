@@ -31,8 +31,7 @@ if ! zgen saved; then
 	zgen oh-my-zsh plugins/history-substring-search
 
 	#theme
-	zgen oh-my-zsh themes/gentoo
-	#zgen load nojhan/liquidprompt liquidprompt.plugin.zsh
+    zgen load "zenorocha/dracula-theme" zsh/dracula.zsh-theme
 
 	#save
 	zgen save
