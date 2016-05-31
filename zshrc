@@ -1,40 +1,52 @@
 #!/bin/zsh
 source ${${(%):-%x}:A:h}/config
 
-if [ ! -d $zshd/zgen ]; then
-    git -C "${zshd}" clone https://github.com/tarjoilija/zgen
-    echo zgen > "$zshd"/.git/info/exclude
-else
-    git -C "${zshd}/zgen" pull -q
+# run us first!
+if [ -d $zd -a -r $zd/pre ]; then source $zd/pre; fi
+
+
+# --- SYSTEM ---
+# prepackaged functions
+fpath+=$zshd/functions
+# prepackaged prompts
+fpath+=$zshd/prompts
+
+# source stuff
+unsetopt NOMATCH
+for f in $zshd/source/*.zsh
+do
+    [ -r $f ] && source $f
+done
+setopt NOMATCH
+
+
+# --- USER ---
+# user's own functions
+fpath+=$zd/functions
+# user's prompts
+fpath+=$zd/prompts
+# user's uh... stuff?
+fpath+=$zd
+
+# user zsh.d
+unsetopt NOMATCH #don't report an error if no rc files are found
+if [ -d $zd -a -d $zd/source ]; then
+    for f in $zd/source/*.zsh
+    do
+        [ -r $f ] && source $f
+    done
+fi
+setopt NOMATCH
+
+# local zshrc
+if [ -d $zd -a -r $zd/zshrc.local ]; then
+    source $zd/zshrc.local
+elif [ -r ${ZDOTDIR:-$HOME}/.zshrc.local ]; then
+    source ${ZDOTDIR:-$HOME}/.zshrc.local
+elif [ -r ~/.zshrc.local ]; then
+    source ~/.zshrc.local
 fi
 
-if [ -r $zshd/pre ]; then; source $zshd/pre; fi
-
-# get zgen to do our stuff
-ZGEN_RESET_ON_CHANGE=( ${ZDOTDIR:-$HOME}/.zshrc )
-ZGEN_DIR=$zshd/zgen.conf
-
-# zgen
-source $zshd/zgen/zgen.zsh
-
-if ! zgen saved; then
-	echo "Creating a zgen save."
-
-	zgen oh-my-zsh
-
-	#plugins
-	zgen oh-my-zsh plugins/git
-	zgen oh-my-zsh plugins/sudo
-	zgen oh-my-zsh plugins/extract
-	zgen oh-my-zsh plugins/wd
-	zgen oh-my-zsh plugins/sprunge
-	zgen oh-my-zsh plugins/history-substring-search
-
-	#theme
-    zgen load "zenorocha/dracula-theme" zsh/dracula.zsh-theme
-
-	#save
-	zgen save
-fi
-
-if [ -r $zshd/post ]; then; source $zshd/post; fi
+# LITERALLY THE VERY LAST THING WE DO IS COMPINIT PLS DUN DO IT URSELF
+autoload -Uz compinit
+compinit

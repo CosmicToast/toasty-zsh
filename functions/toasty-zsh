@@ -1,0 +1,16 @@
+function toasty-zsh {
+    case "$1" in
+        update)
+            git -C $zshd pull
+            ;;
+        source)
+            source $zrc
+            ;;
+        *)
+            echo "Usage: $0 {update|source}"
+            return 1
+            ;;
+    esac
+}
+
+# vim: ft=zsh

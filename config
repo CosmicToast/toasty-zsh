@@ -3,4 +3,4 @@
 zshd=${${(%):-%x}:A:h}
 zrc=${ZDOTDIR:-$HOME}/.zshrc
 zrc=${zrc:A}
-zd=${XDG_CONFIG_HOME:-$HOME/.local/share}/zsh
+zd=$HOME/.zsh

@@ -1,6 +1,9 @@
+Some of the items included here are directly taken from Oh-My-Zsh. This license applies to them.
+
 The MIT License (MIT)
 
-Copyright (c) 2015-2016 SpaceToast
+Copyright (c) 2009-2016 Robby Russell and contributors
+See the full list at https://github.com/robbyrussell/oh-my-zsh/contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
