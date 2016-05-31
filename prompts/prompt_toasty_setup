@@ -1,0 +1,32 @@
+#!/bin/zsh
+
+setopt promptsubst
+
+autoload -Uz add-zsh-hook
+autoload -Uz vcs_info
+
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' check-for-changes false
+zstyle ':vcs_info:*' actionformats \
+    '%B%F{cyan}(%b)%f%%b%c'
+zstyle ':vcs_info:*' formats \
+    '%B%F{cyan}(%b)%f%%b%c'
+
+# we want to catch unstaged and untracked in one swoop
+zstyle ':vcs_info:git*+set-message:*' hooks git-dirty
+function +vi-git-dirty {
+    if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]]
+    then
+        if git status --porcelain | grep -Fq -e 'A' -e '??' -e 'M'
+        then
+            hook_com[staged]+=' %B%F{yellow}✗%f%b '
+        else
+            hook_com[staged]+=' %B%F{green}✔%f%b '
+        fi
+    fi
+}
+
+add-zsh-hook -Uz precmd vcs_info
+
+PS1='%B%(?.%F{green}.%F{red})➜%f%b  %B%F{blue}%1~%f%b ${vcs_info_msg_0_}'
+
