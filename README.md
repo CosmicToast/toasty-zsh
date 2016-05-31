@@ -7,36 +7,26 @@ My Personal Config
 ### About ###
 I like experimenting.
 I also like having a usable shell.
-I also rather disliked how having multiple zsh configs meant clottering up your home dir. I wanted to be able to change between them on a whim.
 
-And thus, Toast Zsh was born.
+There was an obvious base from which I wanted to build, but other solutions were all rather too expansive or too limited. Meanwhile I also wanted unique-to-each-machine configs that would be easy to setup.
+
+And thus, Toasty Zsh was born.
 
 ### Basic Usage ###
-- Clone the repository somewhere into your home directory (~/.zsh is recommended). Use `--recursive` if you want to avoid initializing submodules in step 3.
+- Clone the repository somewhere where it won't get deleted. Literally anywhere. Though ~/.zsh is not recommended (if you put it there, I recommend editing the config file).
 - Enter that directory.
-- Run `git submodule update --init --recursive`
-- Symlink a *.zrc file of your choosing into ~/.zshrc
+- Symlink zshrc to ~/.zshrc.
+- Edit ~/.zsh/zshrc.local with your preferred prompt and autoloads of predefined functions.
 
-To update: run `toast-zsh-upgrade`.
+To update: run `autoload toasty-zsh; toasty-zsh update`.
 
 ### Advanced Usage ###
 $zshd/config Defines:
-- $zshd: the directory where Toast Zsh lives (suggested: ~/.zsh), to be used in other scripts. (PS: $0 is actually broken inside of init scripts, and resolves to /bin/zsh)
-- $zrc: the current zshrc in use, can be used by a zshrc to block sourcing itself when it isn't zshrc
+- $zshd: the directory where Toasty Zsh lives , to be used in other scripts. (PS: $0 is actually broken inside of init scripts, and resolves to /bin/zsh)
+- $zrc: the current zshrc in use, for easy access if you unlink it or something.
 
-$zshd/pre: file that should be run before any plugin-specific configuration, good place to define functions. Currently defines several management-related ones.
-
-$zshd/post: file that should be run after any plugin-specific configuration, good place to unhash functions and source any generic files (~/.zshrc.local, etc)
-
-### Writing Your Own *.zrc ###
-First, source ${${(%):-%x}:A:h}/config.
-
-Translation: (%) is prompt expansion (so we can use -%x), -%x gives us the name of the file we're in (even if we're in an init script). Then we expand that into the path to the directory (even through symlinks) using :A:h (:A for absolute path, :h to get directory). That sources the config file that defines $zshd, which is equivalent to this.
-
-Then, if it exists and is readable, source $zshd/pre.
-
-Now do all of your plugin configuration. No files or folders should be created outside of $zshd. Most systems should allow you to customize this (e.g the ZSH variable with OMZ, etc.).
-
-Good practice is to have the repo as the name of the plugin manager, and if it requires a separate directory, it should be the name with a .conf appended to it (e.g zgen for the zgen source and zgen.conf for the directory with the plugins).
-
-Finally, if it exists and is readable, source $zshd/post.
+### Expanding ###
+- Files in $zd/source will get sourced directly.
+- Files in $zd/prompt will be added to the fpath (separated from functions purely for convenience), and thus be usable by prompt/promptinit.
+- Files in $zd/functions will be added to the fpath, and can be autoloaded in zshrc.local.
+- zshrc.local will be the last thing zshrc will source (right before compinit, please don't compinit, it'll be done, I swear).
