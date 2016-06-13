@@ -1,0 +1,43 @@
+#compdef toasty-zsh
+
+# messy and ugly, w.e
+
+function _toasty-zsh {
+    local context curcontext="$curcontext" state line
+
+    _arguments \
+        ':command:_toasty-zsh_cmds' \
+        '*::arg:->args' \
+
+    case $state in
+        (args)
+            curcontext="${curcontext%:*:*}:_toasty-zsh-$words[1]:"
+            case $line[1] in
+                (plugin)
+                    local paths=($zd/plugins $zshd/plugins)
+                    # using -S to force insert a space after the completion
+                    # there's probably a better way.
+                    _arguments '*:plugins to load:_path_files -W paths -g "*.plugin.zsh(:r:r)" -S " "'
+                ;;
+                (*)
+                ;;
+            esac
+        ;;
+        *)
+        ;;
+    esac
+}
+
+(( $+functions[_toasty-zsh_cmds] )) ||
+function _toasty-zsh_cmds {
+    local commands; commands=(
+        'update:Update (git pull) toasty-zsh'
+        'source:Source the zshrc, useful in some update scenarios'
+        'plugin:Choose plugins to load from the plugin directories'
+        )
+    _describe -t commands "toasty-zsh commmand" commands "$@"
+}
+
+_toasty-zsh
+
+# vim: ft=zsh

@@ -8,6 +8,8 @@ if [ -d $zd -a -r $zd/pre ]; then source $zd/pre; fi
 # --- SYSTEM ---
 # prepackaged functions
 fpath+=$zshd/functions
+# prepackaged completions
+fpath+=$zshd/completions
 # prepackaged prompts
 fpath+=$zshd/prompts
 
@@ -23,6 +25,8 @@ setopt NOMATCH
 # --- USER ---
 # user's own functions
 fpath+=$zd/functions
+# user's completions
+fpath+=$zd/completions
 # user's prompts
 fpath+=$zd/prompts
 # user's uh... stuff?
