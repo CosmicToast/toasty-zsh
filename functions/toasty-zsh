@@ -6,8 +6,34 @@ function toasty-zsh {
         source)
             source $zrc
             ;;
+        plugin)
+            if [ "$#" -lt 2 ]; then
+                return 1
+            else
+                local plugin
+                for plugin in "${@:2}"; do
+                    local plugpath=(
+                        "$zd/plugns/${plugin}.plugin.zsh"
+                        "$zd/plugins/$plugin/${plugin}.plugin.zsh"
+                        "$zshd/plugins/${plugin}.plugin.zsh"
+                        "$zshd/plugins/$plugin/${plugin}.plugin.zsh"
+                        )
+                    local gotit=false
+                    for f in $plugpath; do
+                        [ -r $f ] || continue
+                        source $f
+                        gotit=true
+                        break
+                    done
+                    if ! $gotit; then
+                        echo "Plugin $plugin not found."
+                        return 1
+                    fi
+                done
+            fi
+            ;;
         *)
-            echo "Usage: $0 {update|source}"
+            echo "Usage: $0 {update|source|plugin <plugin-names>}"
             return 1
             ;;
     esac
