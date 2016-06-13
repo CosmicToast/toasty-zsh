@@ -1,0 +1,11 @@
+# example of a basic local zshrc
+
+autoload toasty-zsh # for plugins
+toasty-zsh plugin sudo # enable sudo plugin
+
+autoload sprunge # something with output | sprunge, and sprunge < somefile
+
+# get a non-default prompt
+autoload -Uz promptinit
+promptinit
+prompt toasty
