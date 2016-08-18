@@ -16,7 +16,7 @@ And thus, Toasty Zsh was born.
 - Clone the repository somewhere where it won't get deleted. Literally anywhere. Though ~/.zsh is not recommended (if you put it there, I recommend editing the config file).
 - Enter that directory.
 - Symlink zshrc to ~/.zshrc.
-- Edit ~/.zsh/zshrc.local with your preferred prompt and autoloads of predefined functions.
+- Copy `$zshd/examples/zshrc.local` to `$zd/zshrc.local`
 
 To update: run `autoload toasty-zsh; toasty-zsh update`.
 
@@ -30,3 +30,6 @@ $zshd/config Defines:
 - Files in $zd/prompt will be added to the fpath (separated from functions purely for convenience), and thus be usable by prompt/promptinit.
 - Files in $zd/functions will be added to the fpath, and can be autoloaded in zshrc.local.
 - zshrc.local will be the last thing zshrc will source (right before compinit, please don't compinit, it'll be done, I swear).
+
+### Examples ###
+Examples of various use cases can be found in `$zshd/examples`. A quickstart zshrc.local can be found there as well.
