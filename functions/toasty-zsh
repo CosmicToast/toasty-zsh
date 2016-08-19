@@ -1,42 +1,62 @@
 function toasty-zsh {
-    case "$1" in
-        update)
-            git -C $zshd pull
-            ;;
-        source)
-            source $zrc
-            ;;
-        plugin)
-            if [ "$#" -lt 2 ]; then
+    # we are now POSIX compatible
+    [ -n "$ZSH_VERSION" ] && emulate -L sh # so we emulate POSIX sh
+    # zsh emulation is always sticky in-func, so we need to wrap sourcing
+    function load {
+        [ -n "$ZSH_VERSION" ] && emulate zsh -c ". $1" || . $1
+    }
+    update=
+    plugin=0
+    plugins=
+    src=
+
+    while getopts usp: flag
+    do
+        case $flag in
+        u)  update=1;;
+        s)  src=1;;
+        p)  plugin="$(( plugin + 1 ))"
+            [ -z "$plugins" ] && plugins="$OPTARG" || plugins="$plugins $OPTARG";;
+        ?)  printf 'Usage: %s: [-u] [-s] [-p plugin]\n' $0
+            exit 2;;
+        esac
+    done
+
+    if [ ! -z "$update" ]; then
+        git -C "$zshd" pull
+    fi
+
+    if [ ! -z "$src" ]; then
+        load "$zrc"
+    fi
+
+    if [ "$plugin" -gt 0 ]; then
+        for plug in $plugins; do
+            # prioritize $zd
+            # we no longer complete .plugin.zsh bits in non-dirs
+            plugpath="$zd/plugins/$plug
+                $zd/plugins/$plug/$plug
+                $zd/plugins/$plug/${plug}.zsh
+                $zd/plugins/$plug/${plug}.plugin.zsh
+                $zshd/plugins/$plug
+                $zshd/plugins/$plug/$plug
+                $zshd/plugins/$plug/${plug}.zsh
+                $zshd/plugins/$plug/${plug}.plugin.zsh"
+            foundplug=
+            for p in $plugpath; do
+                # we're only interested in readable regular files
+                ( [ -f "$p" ] && [ -r "$p" ] ) || continue
+                load "$p"
+                foundplug=1
+                break
+            done
+            if [ -z "$foundplug" ]; then
+                printf 'Plugin %s not found!' "$plug"
                 return 1
-            else
-                local plugin
-                for plugin in "${@:2}"; do
-                    local plugpath=(
-                        "$zd/plugns/${plugin}.plugin.zsh"
-                        "$zd/plugins/$plugin/${plugin}.plugin.zsh"
-                        "$zshd/plugins/${plugin}.plugin.zsh"
-                        "$zshd/plugins/$plugin/${plugin}.plugin.zsh"
-                        )
-                    local gotit=false
-                    for f in $plugpath; do
-                        [ -r $f ] || continue
-                        source $f
-                        gotit=true
-                        break
-                    done
-                    if ! $gotit; then
-                        echo "Plugin $plugin not found."
-                        return 1
-                    fi
-                done
             fi
-            ;;
-        *)
-            echo "Usage: $0 {update|source|plugin <plugin-names>}"
-            return 1
-            ;;
-    esac
+        done
+    fi
+    unset -f load
 }
 
-# vim: ft=zsh
+# vim: ft=sh
