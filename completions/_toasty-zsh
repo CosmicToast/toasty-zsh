@@ -2,7 +2,9 @@
 
 function _toasty-zsh {
     paths=($zd/plugins $zshd/plugins)
-    _arguments '-u[update]' '-s[source $zrc]' '*-p[load plugin]:plugin name:_path_files -W paths'
+    _arguments '-u[update]' \
+        '-s[source $zrc]' \
+        '*-p[load plugin]:plugin name:_path_files -W paths'
 }
 
 _toasty-zsh
