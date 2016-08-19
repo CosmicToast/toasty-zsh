@@ -18,7 +18,7 @@ And thus, Toasty Zsh was born.
 - Symlink zshrc to ~/.zshrc.
 - Copy `$zshd/examples/zshrc.local` to `$zd/zshrc.local`
 
-To update: run `autoload toasty-zsh; toasty-zsh update`.
+To update: run `autoload toasty-zsh; toasty-zsh -u`.
 
 ### Advanced Usage ###
 $zshd/config Defines:
