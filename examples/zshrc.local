@@ -1,7 +1,7 @@
 # example of a basic local zshrc
 
 autoload toasty-zsh # for plugins
-toasty-zsh plugin sudo # enable sudo plugin
+toasty-zsh -p sudo # enable sudo plugin
 
 autoload sprunge # something with output | sprunge, and sprunge < somefile
 
