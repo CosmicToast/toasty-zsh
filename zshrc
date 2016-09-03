@@ -1,9 +1,9 @@
 #!/bin/zsh
-source ${${(%):-%x}:A:h}/config
+. ${${(%):-%x}:A:h}/config
 
 # run us first!
 # ... mostly legacy, needed?
-if [ -d $zd -a -r $zd/pre ]; then source $zd/pre; fi
+[ -r $zd/pre ] && . $zd/pre
 
 # --- fpath stuff ---
 # user stuff comes first
@@ -24,7 +24,7 @@ done
 unsetopt NOMATCH
 for f in $zshd/source/*.zsh
 do
-    [ -r $f ] && source $f
+    [ -r $f ] && . $f
 done
 setopt NOMATCH
 
@@ -33,18 +33,18 @@ unsetopt NOMATCH #don't report an error if no rc files are found
 if [ -d $zd -a -d $zd/source ]; then
     for f in $zd/source/*.zsh
     do
-        [ -r $f ] && source $f
+        [ -r $f ] && . $f
     done
 fi
 setopt NOMATCH
 
 # local zshrc
-if [ -d $zd -a -r $zd/zshrc.local ]; then
-    source $zd/zshrc.local
+if [ -r $zd/zshrc.local ]; then
+    . $zd/zshrc.local
 elif [ -r ${ZDOTDIR:-$HOME}/.zshrc.local ]; then
-    source ${ZDOTDIR:-$HOME}/.zshrc.local
+    . ${ZDOTDIR:-$HOME}/.zshrc.local
 elif [ -r ~/.zshrc.local ]; then
-    source ~/.zshrc.local
+    . ~/.zshrc.local
 fi
 
 # LITERALLY THE VERY LAST THING WE DO IS COMPINIT PLS DUN DO IT URSELF
