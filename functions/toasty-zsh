@@ -5,22 +5,40 @@ function toasty-zsh {
     function load {
         [ -n "$ZSH_VERSION" ] && emulate zsh -c ". $1" || . $1
     }
+    compile=
+    localcompile=
     plugin=0
     plugins=
     src=
     update=
 
-    while getopts p:su flag
+    while getopts clp:su flag
     do
         case $flag in
+        c)  compile=1;;
+        l)  localcompile=1;;
         p)  plugin="$(( plugin + 1 ))"
             [ -z "$plugins" ] && plugins="$OPTARG" || plugins="$plugins $OPTARG";;
         s)  src=1;;
         u)  update=1;;
         ?)  printf 'Usage: %s: [-u] [-s] [-p plugin]\n' $0
-            exit 2;;
+            return 2;;
         esac
     done
+
+    if [ ! -z "$compile" ]; then
+        dirs="$zshd/functions"
+        [ ! -z "$localcompile" ] && dirs="$dirs $zd/functions"
+        function {
+            for dir in $@; do
+                for f in $dir/*; do
+                    # don't compile things that are already compiled
+                    [ ! "${f%.zwc}" = "$f" ] && continue
+                    zcompile "$f.zwc" "$f"
+                done
+            done
+        } "$dirs"
+    fi
 
     if [ ! -z "$update" ]; then
         git -C "$zshd" pull
