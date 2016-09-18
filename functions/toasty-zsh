@@ -5,18 +5,18 @@ function toasty-zsh {
     function load {
         [ -n "$ZSH_VERSION" ] && emulate zsh -c ". $1" || . $1
     }
-    update=
     plugin=0
     plugins=
     src=
+    update=
 
-    while getopts usp: flag
+    while getopts p:su flag
     do
         case $flag in
-        u)  update=1;;
-        s)  src=1;;
         p)  plugin="$(( plugin + 1 ))"
             [ -z "$plugins" ] && plugins="$OPTARG" || plugins="$plugins $OPTARG";;
+        s)  src=1;;
+        u)  update=1;;
         ?)  printf 'Usage: %s: [-u] [-s] [-p plugin]\n' $0
             exit 2;;
         esac
