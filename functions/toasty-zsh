@@ -27,17 +27,17 @@ function toasty-zsh {
     done
 
     if [ ! -z "$compile" ]; then
-        dirs="$zshd/functions"
-        [ ! -z "$localcompile" ] && dirs="$dirs $zd/functions"
-        function {
-            for dir in $@; do
-                for f in $dir/*; do
-                    # don't compile things that are already compiled
-                    [ ! "${f%.zwc}" = "$f" ] && continue
-                    zcompile "$f.zwc" "$f"
-                done
+        function compile_dir { # single dir only, could expand later if I want to
+            [ "$#" -lt 1 ] && return
+            for f in "$1"/*; do
+                # don't compile things that are already compiled
+                [ ! "${f%.zwc}" = "$f" ] && continue
+                zcompile "$f.zwc" "$f"
             done
-        } "$dirs"
+        }
+        compile_dir "$zshd/functions"
+        [ ! -z "$localcompile" ] && compile_dir "$zd/functions"
+        unset -f compile_dir
     fi
 
     if [ ! -z "$update" ]; then
