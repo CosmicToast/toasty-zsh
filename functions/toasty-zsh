@@ -21,7 +21,7 @@ function toasty-zsh {
             [ -z "$plugins" ] && plugins="$OPTARG" || plugins="$plugins $OPTARG";;
         s)  src=1;;
         u)  update=1;;
-        ?)  printf 'Usage: %s: [-u] [-s] [-p plugin]\n' $0
+        ?)  printf 'Usage: %s: [-c] [-l] [-u] [-s] [-p plugin]\n' $0
             return 2;;
         esac
     done
