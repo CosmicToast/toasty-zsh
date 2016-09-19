@@ -29,10 +29,11 @@ function toasty-zsh {
     if [ ! -z "$compile" ]; then
         function compile_dir { # single dir only, could expand later if I want to
             [ "$#" -lt 1 ] && return
+            [ -d "$1"    ] || return
             for f in "$1"/*; do
                 # don't compile things that are already compiled
                 [ ! "${f%.zwc}" = "$f" ] && continue
-                zcompile "$f.zwc" "$f"
+                zcompile "$f"
             done
         }
         compile_dir "$zshd/functions"
