@@ -33,3 +33,12 @@ $zshd/config Defines:
 
 ### Examples ###
 Examples of various use cases can be found in `$zshd/examples`. A quickstart zshrc.local can be found there as well.
+----
+### Explanations ###
+- `$zd` and `$zshd` are mirrored to trivialize contributing (including for myself)
+- source is self explanatory
+- functions, prompts and completions are all basically fpath entries, but are separate for the following reasons:
+  - functions is what most will want, and will be the most commonly touched directory, so it is separate to keep things clean
+  - prompts are meant to be simply dropped into the directory, rather than actually edited
+  - completions are meant to be hand-written, but not cluttering up functions. Moreover, there are plans to make a function that'll basically `$EDITOR $zd/functions/$1 $zd/completions/_$1` (ETA: maybe eventually)
+- plugins could be basically called "optional source", but that sounds awkward, doesn't it? That's how you should treat them though.
