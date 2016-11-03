@@ -27,7 +27,7 @@ $zshd/config Defines:
 
 ### Expanding ###
 - Files in $zd/source will get sourced directly.
-- Files in $zd/prompt will be added to the fpath (separated from functions purely for convenience), and thus be usable by prompt/promptinit.
+- Files in $zd/prompts will be added to the fpath (separated from functions purely for convenience), and thus be usable by prompt/promptinit.
 - Files in $zd/functions will be added to the fpath, and can be autoloaded in zshrc.local.
 - zshrc.local will be the last thing zshrc will source (right before compinit, please don't compinit, it'll be done, I swear).
 
