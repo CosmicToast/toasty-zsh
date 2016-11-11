@@ -2,13 +2,15 @@ function pve {
     [ -n "$ZSH_VERSION" ] && emulate -L sh
 
     # the virtualenv basically goes into $usedir/$dname
+    delete=
     dname=
     usedir=~/.venv
 
     while getopts lsd: flag
     do
         case $flag in
-        d) usedir="$OPTARG";;
+        d) delete=1
+        p) usedir="$OPTARG";;
         l) usedir="$PWD"
            dname="env";;
         s) dname="$(basename $PWD)";;
@@ -36,6 +38,9 @@ function pve {
     # cases of manually calling the binary from the prefix are not supported
     [ ! -f "$path/bin/activate" ] && virtualenv "$path" # create if not already there
     . "$path/bin/activate"
+
+    # I'm kind of cheating by just doing this at the end, but whatever
+    [ ! -z "$delete" ] && rm -r "$path" && deactivate
 }
 
 # vim: ft=sh
