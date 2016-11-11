@@ -6,7 +6,7 @@ function pve {
     dname=
     usedir=~/.venv
 
-    while getopts lsd: flag
+    while getopts lsd:p flag
     do
         case $flag in
         d) delete=1
