@@ -6,13 +6,13 @@ function pve {
     dname=
     usedir=~/.venv
 
-    while getopts lsd:p flag
+    while getopts dlp:s flag
     do
         case $flag in
-        d) delete=1
-        p) usedir="$OPTARG";;
+        d) delete=1;;
         l) usedir="$PWD"
            dname="env";;
+        p) usedir="$OPTARG";;
         s) dname="$(basename $PWD)";;
         ?) printf 'Usage: %s: [-d custom_directory] [-l | -s | venv name]' $0
            return 2;;
@@ -30,17 +30,17 @@ function pve {
     done
     [ "$hasname" -gt 0 ] && dname="$1"
 
-    path="$usedir/$dname"
+    pth="$usedir/$dname"
 
-    [ ! -d "$path" ] && mkdir -p "$path"
+    [ ! -d "$pth" ] && mkdir -p "$pth"
     [ ! -z "$VIRTUAL_ENV" ] && deactivate # leave current virtualenv
     # deactivate DOES unset VIRTUAL_ENV on my setup
     # cases of manually calling the binary from the prefix are not supported
-    [ ! -f "$path/bin/activate" ] && virtualenv "$path" # create if not already there
-    . "$path/bin/activate"
+    [ ! -f "$pth/bin/activate" ] && virtualenv "$pth" # create if not already there
+    . "$pth/bin/activate"
 
     # I'm kind of cheating by just doing this at the end, but whatever
-    [ ! -z "$delete" ] && rm -r "$path" && deactivate
+    [ ! -z "$delete" ] && rm -r "$pth" && deactivate
 }
 
 # vim: ft=sh
