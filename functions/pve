@@ -41,6 +41,8 @@ function pve {
 
     # I'm kind of cheating by just doing this at the end, but whatever
     [ ! -z "$delete" ] && rm -r "$pth" && deactivate
+
+    return 0
 }
 
 # vim: ft=sh
