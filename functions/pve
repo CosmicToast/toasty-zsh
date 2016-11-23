@@ -32,8 +32,8 @@ function pve {
 
     pth="$usedir/$dname"
 
-    [ ! -d "$pth" ] && mkdir -p "$pth"
     [ ! -z "$VIRTUAL_ENV" ] && deactivate # leave current virtualenv
+    [ ! -d "$pth" ] && mkdir -p "$pth"
     # deactivate DOES unset VIRTUAL_ENV on my setup
     # cases of manually calling the binary from the prefix are not supported
     [ ! -f "$pth/bin/activate" ] && virtualenv "$pth" # create if not already there
