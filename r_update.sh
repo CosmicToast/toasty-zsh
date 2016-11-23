@@ -16,5 +16,5 @@ then
 fi
 
 zshd="$(dirname $0)"
-. "$zshd/functions/toasty-zsh"
-toasty-zsh -c
+#. "$zshd/functions/toasty-zsh"
+#toasty-zsh -c
