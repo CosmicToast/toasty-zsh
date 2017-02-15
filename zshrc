@@ -1,5 +1,7 @@
-#!/bin/zsh
-. ${${(%):-%x}:A:h}/config
+# this should only be used as the zshrc, so this is fine
+zrc="$HOME/.zshrc"
+zrc="$zrc:A"
+. "$zrc:h/config"
 
 # run us first!
 # ... mostly legacy, needed?
