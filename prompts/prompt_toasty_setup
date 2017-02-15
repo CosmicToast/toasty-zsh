@@ -1,5 +1,3 @@
-#!/bin/zsh
-
 setopt promptsubst
 
 autoload -Uz add-zsh-hook
@@ -31,3 +29,4 @@ add-zsh-hook -Uz precmd vcs_info
 PS1='%B%(?.%F{green}.%F{red})→%f%b %B%(!.%F{red}.%F{blue})%1~%f%b ${vcs_info_msg_0_}'
 RPS1='%B%F{red}[%n@%m]%f%b'
 
+# vim: ft=zsh

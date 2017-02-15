@@ -1,6 +1,7 @@
-#!/bin/zsh
 # we define stuff that can be used inside our rcs and stuff
 zshd=${0:h} # we're not in the true rc anymore
 zrc=${ZDOTDIR:-$HOME}/.zshrc
 zrc=${zrc:A}
 zd=$HOME/.zsh
+
+# vim: ft=zsh

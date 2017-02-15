@@ -50,3 +50,5 @@ fi
 # LITERALLY THE VERY LAST THING WE DO IS COMPINIT PLS DUN DO IT URSELF
 autoload -Uz compinit
 compinit
+
+# vim: ft=zsh

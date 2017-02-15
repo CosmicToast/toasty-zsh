@@ -11,3 +11,5 @@ function _toasty-zsh {
 }
 
 _toasty-zsh
+
+# vim: ft=zsh

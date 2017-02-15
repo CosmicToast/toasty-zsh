@@ -34,5 +34,3 @@ setopt promptsubst
 
 # shell emulation
 setopt bsdecho
-
-# vim: ft=zsh
