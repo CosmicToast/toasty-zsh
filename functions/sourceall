@@ -2,13 +2,15 @@
 # - sourced files cannot set options.
 # - $p will be unset, if it exists.
 # - $f will be unset, if it exists.
+# - $ext will be unset, if it exists.
 sourceall() {
     [ -n "$ZSH_VERSION" ] && setopt localoptions shwordsplit
+    [ $# -gt 0 ] && ext=".$1" || ext=""
     local IFS=:
     for p in $APATH
     do
         [ -d "$p" ] || continue
-        for f in $p/*
+        for f in $p/*$ext
         do
             [ -f "$f" ] && . "$f"
         done
@@ -16,6 +18,7 @@ sourceall() {
 
     unset p
     unset f
+    unset ext
 }
 
 # vim: ft=sh

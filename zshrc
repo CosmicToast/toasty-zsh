@@ -32,7 +32,7 @@ apath=(
     "$zd/source"
     "$zshd/source"
 )
-sourceall
+sourceall zsh
 
 # local zshrc
 [ -f "$zd/zshrc.local" ] && . "$zd/zshrc.local"
