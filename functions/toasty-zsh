@@ -50,6 +50,7 @@ function toasty-zsh {
     fi
 
     if [ "$plugin" -gt 0 ]; then
+        echo "Warning: toasty-zsh -p is deprecated. Use autosource instead."
         for plug in $plugins; do
             # prioritize $zd
             # we no longer complete .plugin.zsh bits in non-dirs
