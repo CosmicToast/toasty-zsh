@@ -6,6 +6,9 @@ zrc="$zrc:A"
 # run us first!
 # ... mostly legacy, needed?
 [ -r $zd/pre ] && . $zd/pre
+# options treated separately because of sourceall
+[ -f "$zshd/options.zsh" ] && . "$zshd/options.zsh"
+[ -f "$zd/options.zsh"   ] && . "$zd/options.zsh"
 
 # --- fpath stuff ---
 # user stuff comes first
@@ -22,23 +25,20 @@ for fdir in $fdirs; do
     fpath=($fpath $fdir)
 done
 
-# source stuff
-unsetopt NOMATCH
-for f in $zshd/source/*.zsh
-do
-    [ -r $f ] && . $f
-done
-setopt NOMATCH
+autoload autosource
+typeset -T SPATH spath
+spath=(
+    "$zd/plugins"
+    "$zshd/plugins"
+)
 
-# source user stuff
-unsetopt NOMATCH #don't report an error if no rc files are found
-if [ -d $zd -a -d $zd/source ]; then
-    for f in $zd/source/*.zsh
-    do
-        [ -r $f ] && . $f
-    done
-fi
-setopt NOMATCH
+autoload sourceall
+typeset -T APATH apath
+apath=(
+    "$zd/source"
+    "$zshd/source"
+)
+sourceall
 
 # local zshrc
 if [ -r $zd/zshrc.local ]; then
