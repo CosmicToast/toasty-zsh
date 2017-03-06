@@ -1,0 +1,19 @@
+# side effects:
+# - sourced files cannot set options.
+# - $p will be unset, if it exists.
+autosource() {
+    [ -n "$ZSH_VERSION" ] && setopt localoptions shwordsplit
+    local IFS=:
+    while [ $# -gt 0 ]
+    do
+        for p in $SPATH
+        do
+            [ -f "$p/$1" ] && . "$p/$1" && break
+        done
+        shift
+    done
+
+    unset p
+}
+
+# vim: ft=sh

@@ -1,0 +1,21 @@
+# side effects:
+# - sourced files cannot set options.
+# - $p will be unset, if it exists.
+# - $f will be unset, if it exists.
+sourceall() {
+    [ -n "$ZSH_VERSION" ] && setopt localoptions shwordsplit
+    local IFS=:
+    for p in $APATH
+    do
+        [ -d "$p" ] || continue
+        for f in $p/*
+        do
+            [ -f "$f" ] && . "$f"
+        done
+    done
+
+    unset p
+    unset f
+}
+
+# vim: ft=sh
