@@ -1,19 +1,30 @@
-# side effects:
-# - sourced files cannot set options.
-# - $p will be unset, if it exists.
 autosource() {
-    [ -n "$ZSH_VERSION" ] && setopt localoptions shwordsplit
+    # shells tend to respect local, or namespace variables
+    local reset=
+    local p=
+
+    # IFS reset for shells that don't handle it properly
+    [ -n "$ZSH_VERSION" ] && local reset='setopt noshwordsplit'
+
+    # see first block, but IFS is avoided until it's required
     local IFS=:
+
+    # for each argument...
     while [ $# -gt 0 ]
     do
+        # zsh doesn't split things the way most shells do
+        [ -n "$ZSH_VERSION" ] && setopt shwordsplit
+
         for p in $SPATH
         do
+            # no need for IFS now that SPATH is expanded
+            eval "$reset"
+
+            # we found the first matching plugin
             [ -f "$p/$1" ] && . "$p/$1" && break
         done
-        shift
+        shift # next argument
     done
-
-    unset p
 }
 
 # vim: ft=sh
