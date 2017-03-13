@@ -3,11 +3,21 @@ zrc="$HOME/.zshrc"
 zrc="$zrc:A"
 . "$zrc:h/config"
 
-# options treated separately because of sourceall
-[ -f "$zshd/options.zsh" ] && . "$zshd/options.zsh"
-[ -f "$zd/options.zsh"   ] && . "$zd/options.zsh"
+# spath -> autosource path, ala plugins
+# apath -> sourceall path, for .d dirs
+typeset -T SPATH spath
+typeset -T APATH apath
 
-# --- fpath stuff ---
+# default values
+spath=(
+    "$zd/plugins"
+    "$zshd/plugins"
+)
+apath=(
+    "$zd/source"
+    "$zshd/source"
+)
+
 # user stuff comes first
 # completions come after the functions they complete
 fpath+=(
@@ -19,20 +29,12 @@ fpath+=(
     "$zshd/prompts"
 )
 
-autoload autosource
-typeset -T SPATH spath
-spath=(
-    "$zd/plugins"
-    "$zshd/plugins"
-)
+# sourced before sourcealling
+# should be the location to edit fpath/apath/spath
+[ -f "$zd/pre" ] && . "$zd/pre"
 
 autoload sourceall
-typeset -T APATH apath
-apath=(
-    "$zd/source"
-    "$zshd/source"
-)
-sourceall zsh
+sourceall zsh # source every .zsh file in every $apath[@] directory
 
 # local zshrc
 [ -f "$zd/zshrc.local" ] && . "$zd/zshrc.local"
