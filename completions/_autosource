@@ -1,0 +1,10 @@
+#compdef autosource
+
+function _autosource {
+    _alternative \
+        'plugin:filename:{_path_files -W spath}'
+}
+
+_autosource
+
+# vim: ft=zsh
