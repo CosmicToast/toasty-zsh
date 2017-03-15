@@ -15,6 +15,15 @@ And thus, Toasty Zsh was born.
 ### tl;dr ###
 It does some setup stuff to make your shell behave more consistently, adds some convenient directories to fpath, automatically sources stuff you drop in other convenient directories, and allows you to easily use drag and drop plugins.
 
+#### Quickstart ####
+1. Clone this repository somewhere
+2. Link the zshrc file within it into ~/.zshrc
+3. Create the ~/.zsh directory
+4. Copy the examples/zshrc.local file from the repo into ~/.zsh/zshrc.local
+5. Restart your shell and enjoy!
+
+See the information below on how to expand on this relatively basic setup.
+
 ### What does it do... more specifically? ###
 #### Variables ####
 Toasty Zsh will set two important variables, and a couple less important ones (shown below).
