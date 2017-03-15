@@ -12,37 +12,120 @@ There was an obvious base from which I wanted to build, but other solutions were
 
 And thus, Toasty Zsh was born.
 
-### Basic Usage ###
-- Clone the repository somewhere where it won't get deleted. Literally anywhere. Though ~/.zsh is not recommended (if you put it there, I recommend editing the config file).
-- Enter that directory.
-- Symlink zshrc to ~/.zshrc.
-- Copy `$zshd/examples/zshrc.local` to `$zd/zshrc.local`
+### tl;dr ###
+It does some setup stuff to make your shell behave more consistently, adds some convenient directories to fpath, automatically sources stuff you drop in other convenient directories, and allows you to easily use drag and drop plugins.
 
-To update: just `git -C $zshd pull`.
+### What does it do... more specifically? ###
+#### Variables ####
+Toasty Zsh will set two important variables, and a couple less important ones (shown below).
 
-### Advanced Usage ###
-`$zshd/config` Defines:
-- `$zshd`: the directory where Toasty Zsh lives, to be used in other scripts. (PS: $0 is actually broken inside of init scripts, and resolves to /bin/zsh)
-- `$zd`: the directory where your configuration lives.
+- zd: the directory where your user configuration will live.
+- zshd: the directory where toasty zsh is installed.
 
-### Expanding ###
-`$z` in this section will refer to both `$zd` and `$zshd`.
+#### Execution ####
+1. Use zshy magic to find `$zshd/config` and source it. (distributed) This will set the variables mentioned above.
+2. Create a -T type typeset between SPATH/spath and APATH/apath. For more details, see `zshbuiltins(1)/typeset \[/-T/-T`.
+3. Set spath and apath to their default values (the `plugins` and `source` subidrectories respectively of `$zd` followed by `$zshd`.
+4. Set the fpath to `./functions`, `./completions` and `./prompts` of `$zd` followed by `$zshd`.
+5. Source `$zd/pre` if it exists to allow users to overwrite the above default.
+6. Autoload (for more details, see `zshbuiltins(1)/autoload`) the sourceall function (see below) and call `sourceall zsh`.
+7. Source `$zd/zshrc.local` if it exists - most of your configuration should be done here.
+8. Run compinit - please don't do this yourself.
 
-Note: any options set with `setopt` in sourced files and plugins will be discarded.
+### API ###
+#### Sourced Files ####
+The following files are distributed with Toasty Zsh, and will be sourced every time the shell is started.
 
-- Files in `$z/source` will get sourced. Note that this will likely change later. (there will be a way to edit apath before it gets run).
-- `$z/finctions`, `$z/completions` and `$z/prompts` are added to the fpath. The separation is purely for convenience.
-- `$z/plugins` will be added to spath, which will allow to source the highest available file in them (think `$PATH`) using `autosource`. Note: the name "plugins" will likely change in the near future.
-- `$zd/zshrc.local` will be the last thing zshrc will source (right before compinit, please don't compinit, it'll be done, I swear).
+- bindkeys.zsh : use terminfo keys to set up common emacs-style shortcuts, such as home and arrow keys.
+- completions.zsh : edit various completion options.
+- grep.zsh : add commonly used grep aliases (`grep` -> `grep --color=auto`).
+- ls.zsh : add commonly used ls aliases:
+  - `ls` -> `ls --color=auto`
+  - `ll` -> `ls -lh`
+  - `l`  -> `ll`
+  - `la` -> `l -a`
+- options.zsh : enable various opinionated options that I like and think improve the shell experience.
 
-### Examples ###
-Examples of various use cases can be found in `$zshd/examples`. A quickstart zshrc.local can be found there as well.
-----
-### Explanations ###
-- `$zd` and `$zshd` are mirrored to trivialize contributing (including for myself)
-- source is self explanatory
-- functions, prompts and completions are all basically fpath entries, but are separate for the following reasons:
-  - functions is what most will want, and will be the most commonly touched directory, so it is separate to keep things clean
-  - prompts are meant to be simply dropped into the directory, rather than actually edited
-  - completions are meant to be hand-written, but not cluttering up functions.
-- plugins could be basically called "optional source", but that sounds awkward, doesn't it? That's how you should treat them though.
+#### Provided Prompts ####
+The following prompts are shipped with Toasty Zsh. Please use the promptinit function family to use them.
+
+- toasty : my personal theme, written from scratch, inspired by robby russel's theme.
+- [shellder][shellder] : please don't forget to set DEFAULT_USER
+
+#### Provided Plugins ####
+The following plugins are shipped with Toasty Zsh. Please use the autosource function to use them.
+
+- sudo : double tap `ESC` to add or remove sudo from your current (or previous, if current is empty) command.
+
+#### Functions ####
+##### AutoSource #####
+Will source the first matching file in `$SPATH` (formatted like `$PATH`) for each argument. Think plugins. Subdirectories are valid.
+
+Examples:
+```sh
+SPATH="$PWD" autosource a # will source ./a if it exists
+SPATH="./a:./b" autosource c # will attempt to source ./a/c, and then ./b/c if that fails
+SPATH="$PWD" autosource foo/bar # will attempt to source ./foo/bar if it exists
+```
+
+##### SourceAll #####
+Will source every file under each directory in `$APATH` (formatted like `$PATH`). Will not recurse into subdirectories. If an argument is provided, it will only source files that end in `.$1`.
+
+Examples:
+```sh
+APATH="a:b" sourceall # will source a/* and b/*
+APATH="$PWD" sourceall zsh # will source ./*.zsh
+```
+
+##### PVE #####
+Manages python virtual environments.
+
+Synopsis: `pve [-p custom_directory] [-d] [-l | -s | venv name]`
+
+This will create and enter a python virtualenv. In its basic form, `pve [venv name]`, it will create it in `~/.venv/[venv name]`.
+
+- `-p directory` : "prefix": use `directory` instead of `~/.venv`.
+- `-d` : "delete": instead of creating and entering, delete and exit.
+- `-l` : "local": sets "prefix" to the current working directory, and the name to "env".
+- `-s` : "self": sets the name to the name of the current working directory.
+
+The last specified flag will be the honored one, getopts style.
+
+Examples:
+```sh
+pve ipython # create and enter the ipython virtualenv
+pve -d ipython # delete the ipython virtualenv. deactivate if you are in one.
+pve -p /tmp ipython # create an ipython virtualenv in /tmp
+pve -l # create a virtualenv in ./env
+pve -s # create a virtualenv in ~/.venv/$PWD
+```
+
+##### Sprunge #####
+Simple wrapper around uploading text to [sprunge][sprunge]. Takes things in stdin, outputs the url into stdout.
+
+Examples:
+```sh
+echo hi | sprunge # upload "hi\n" to sprunge.us
+sprunge < file # upload file to sprunge.us
+bsdtar -cf - --format shar dir | sprunge # upload a "shar" archive of dir to sprunge.us
+```
+
+##### toasty-zsh #####
+Please don't use this, it's deprecated in favor of `autosource` and `sourceall`.
+
+If you must know what it does, you can look at the completions.
+
+### Disclaimer ###
+Some of the provided API may be either written by me (in which case you may consider it ISC code) or shamelessly stolen from somewhere else (in which case you can find the license in `$zshd/third-party-licenses`). Here is the (possibly not up to date) list of files that have partial or full origins elsewhere.
+
+If you want your stuff included, convince me it's useful. Being liberally licensed (preferably not GPL and certainly not GPLv3) should help.
+
+- plugins/sudo : from [omz][omz]
+- prompts/toasty : written from scratch, but heavily inspired by the robbyrussel theme from [omz][omz]
+- prompts/shellder : taken directly from [shellder][shellder]
+- source/bindkeys.zsh : **heavily** inspired by [omz][omz] and [the zsh wiki][zwiki] (whose license I could not find).
+
+[omz]: https://github.com/robbyrussell/oh-my-zsh "Oh-My-Zsh's Repository"
+[shellder]: https://github.com/simnalamburt/shellder "Shellder's Home Repository"
+[sprunge]: http://sprunge.us/ "A Simple Pastebin Service"
+[zwiki]: http://zshwiki.org/home/ "The Zsh Wiki"
