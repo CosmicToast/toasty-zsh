@@ -134,6 +134,9 @@ If you want your stuff included, convince me it's useful. Being liberally licens
 - prompts/shellder : taken directly from [shellder][shellder]
 - source/bindkeys.zsh : **heavily** inspired by [omz][omz] and [the zsh wiki][zwiki] (whose license I could not find).
 
+### Notes ###
+The `shwordsplit` option is handled differently by autosource and sourceall - it will be treated as if the local options setting is set. This is because it's needed for those two functions to work (across more than just zsh), and is therefore set temporarily. However, autosourced and sourcealld files should be able to set options. The compromise is to manually detect its state at the beginning of the source loop, and restore it to that after it is no longer required. The side effect is that you have to set it (if you want it) in `$zd/pre`.
+
 [omz]: https://github.com/robbyrussell/oh-my-zsh "Oh-My-Zsh's Repository"
 [shellder]: https://github.com/simnalamburt/shellder "Shellder's Home Repository"
 [sprunge]: http://sprunge.us/ "A Simple Pastebin Service"

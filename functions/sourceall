@@ -5,7 +5,9 @@ sourceall() {
     local f=
 
     # IFS reset for shells that don't handle it properly
-    [ -n "$ZSH_VERSION" ] && reset='setopt noshwordsplit'
+    [ -n "$ZSH_VERSION" ] &&
+        ! (setopt | grep -qF shwordsplit) &&
+        local reset='setopt noshwordsplit'
 
     # calling `sourceall zsh` will source *.zsh, otherwise *
     [ $# -gt 0 ] && local ext=".$1" || local ext=""

@@ -4,7 +4,9 @@ autosource() {
     local p=
 
     # IFS reset for shells that don't handle it properly
-    [ -n "$ZSH_VERSION" ] && local reset='setopt noshwordsplit'
+    [ -n "$ZSH_VERSION" ] &&
+        ! (setopt | grep -qF shwordsplit) &&
+        local reset='setopt noshwordsplit'
 
     # see first block, but IFS is avoided until it's required
     local IFS=:
