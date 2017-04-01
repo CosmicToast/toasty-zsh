@@ -1,5 +1,6 @@
-# example on how to print current running task to the terminal title
-# part 2: using the function
+function xterm-title {
+    print -Pn '\e]0;%n@%m $(history $HISTCMD | cut -b8-)\a'
+}
 
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd  xterm-title
