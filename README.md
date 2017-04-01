@@ -65,6 +65,7 @@ The following prompts are shipped with Toasty Zsh. Please use the promptinit fun
 The following plugins are shipped with Toasty Zsh. Please use the autosource function to use them.
 
 - sudo : double tap `ESC` to add or remove sudo from your current (or previous, if current is empty) command.
+- xterm-title : will print xterm-compatible ascii escapes to change the terminal title to "user@host [currently executing command]" Note: may not work with all terminals (e.g Konsole sets their own titles, which overrides this), but works fine with ones that accept these sequences (e.g st will work just fine).
 
 #### Functions ####
 ##### AutoSource #####
