@@ -14,8 +14,8 @@ spath=(
     "$zshd/plugins"
 )
 apath=(
-    "$zd/source"
     "$zshd/source"
+    "$zd/source"
 )
 
 # user stuff comes first
