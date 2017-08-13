@@ -1,6 +1,8 @@
 Toast Zsh
 =========
 
+[![license]](LICENSE.md)
+
 My Personal Config
 ------------------
 
@@ -138,6 +140,7 @@ If you want your stuff included, convince me it's useful. Being liberally licens
 ### Notes ###
 The `shwordsplit` option is handled differently by autosource and sourceall - it will be treated as if the local options setting is set. This is because it's needed for those two functions to work (across more than just zsh), and is therefore set temporarily. However, autosourced and sourcealld files should be able to set options. The compromise is to manually detect its state at the beginning of the source loop, and restore it to that after it is no longer required. The side effect is that you have to set it (if you want it) in `$zd/pre`.
 
+[license]: https://img.shields.io/github/license/5pacetoast/toasty-zsh.svg
 [omz]: https://github.com/robbyrussell/oh-my-zsh "Oh-My-Zsh's Repository"
 [shellder]: https://github.com/simnalamburt/shellder "Shellder's Home Repository"
 [sprunge]: http://sprunge.us/ "A Simple Pastebin Service"
