@@ -47,14 +47,14 @@ Toasty Zsh will set two important variables, and a couple less important ones (s
 #### Sourced Files ####
 The following files are distributed with Toasty Zsh, and will be sourced every time the shell is started.
 
-- bindkeys.zsh : use terminfo keys to set up common emacs-style shortcuts, such as home and arrow keys.
-- completions.zsh : edit various completion options.
 - aliases.zsh : add commonly used aliases. Currently supports:
     - `grep` -> `grep --color=auto`
     - `ls`   -> `ls --color -auto`
     - `ll`   -> `ls -lh`
     - `l`    -> `ll`
     - `la`   -> `l -a`
+- bindkeys.zsh : use terminfo keys to set up common emacs-style shortcuts, such as home and arrow keys.
+- completions.zsh : edit various completion options.
 - options.zsh : enable various opinionated options that I like and think improve the shell experience.
 
 #### Provided Prompts ####
