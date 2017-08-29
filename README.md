@@ -55,6 +55,7 @@ The following files are distributed with Toasty Zsh, and will be sourced every t
     - `la`   -> `l -a`
 - bindkeys.zsh : use terminfo keys to set up common emacs-style shortcuts, such as home and arrow keys.
 - completions.zsh : edit various completion options.
+- env.zsh : set some generally (I hope) agreeable environment variables, for baseline deployments.
 - options.zsh : enable various opinionated options that I like and think improve the shell experience.
 
 #### Provided Prompts ####
