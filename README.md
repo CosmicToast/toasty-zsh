@@ -49,12 +49,12 @@ The following files are distributed with Toasty Zsh, and will be sourced every t
 
 - bindkeys.zsh : use terminfo keys to set up common emacs-style shortcuts, such as home and arrow keys.
 - completions.zsh : edit various completion options.
-- grep.zsh : add commonly used grep aliases (`grep` -> `grep --color=auto`).
-- ls.zsh : add commonly used ls aliases:
-  - `ls` -> `ls --color=auto`
-  - `ll` -> `ls -lh`
-  - `l`  -> `ll`
-  - `la` -> `l -a`
+- aliases.zsh : add commonly used aliases. Currently supports:
+    - `grep` -> `grep --color=auto`
+    - `ls`   -> `ls --color -auto`
+    - `ll`   -> `ls -lh`
+    - `l`    -> `ll`
+    - `la`   -> `l -a`
 - options.zsh : enable various opinionated options that I like and think improve the shell experience.
 
 #### Provided Prompts ####
