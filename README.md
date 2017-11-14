@@ -63,6 +63,8 @@ The following prompts are shipped with Toasty Zsh. Please use the promptinit fun
 
 - toasty : my personal theme, written from scratch, inspired by robby russel's theme.
 - [shellder][shellder] : please don't forget to set DEFAULT_USER
+- [pure][pure]: the popular pure theme
+- [purer][purer]: a single-line variation (read: fork) of the pure theme
 
 #### Provided Plugins ####
 The following plugins are shipped with Toasty Zsh. Please use the autosource function to use them.
@@ -144,5 +146,7 @@ The `shwordsplit` option is handled differently by autosource and sourceall - it
 [license]: https://img.shields.io/github/license/5pacetoast/toasty-zsh.svg
 [omz]: https://github.com/robbyrussell/oh-my-zsh "Oh-My-Zsh's Repository"
 [shellder]: https://github.com/simnalamburt/shellder "Shellder's Home Repository"
+[pure]: https://github.com/sindresorhus/pure "Pure Theme Repository"
+[purer]: https://github.com/dfurnes/purer "Purer Theme Repository"
 [sprunge]: http://sprunge.us/ "A Simple Pastebin Service"
 [zwiki]: http://zshwiki.org/home/ "The Zsh Wiki"
