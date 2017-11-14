@@ -125,11 +125,6 @@ sprunge < file # upload file to sprunge.us
 bsdtar -cf - --format shar dir | sprunge # upload a "shar" archive of dir to sprunge.us
 ```
 
-##### toasty-zsh #####
-Please don't use this, it's deprecated in favor of `autosource` and `sourceall`.
-
-If you must know what it does, you can look at the completions.
-
 ### Disclaimer ###
 Some of the provided API may be either written by me (in which case you may consider it ISC code) or shamelessly stolen from somewhere else (in which case you can find the license in `$zshd/third-party-licenses`). Here is the (possibly not up to date) list of files that have partial or full origins elsewhere.
 
