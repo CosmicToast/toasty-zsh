@@ -138,6 +138,8 @@ If you want your stuff included, convince me it's useful. Being liberally licens
 - plugins/sudo : from [omz][omz]
 - prompts/toasty : written from scratch, but heavily inspired by the robbyrussel theme from [omz][omz]
 - prompts/shellder : taken directly from [shellder][shellder]
+- prompts/pure : taken directly from [pure][pure]
+- prompts/purer : taken directly from [purer][purer]
 - source/bindkeys.zsh : **heavily** inspired by [omz][omz] and [the zsh wiki][zwiki] (whose license I could not find).
 
 ### Notes ###
