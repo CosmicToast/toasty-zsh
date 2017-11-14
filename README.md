@@ -92,7 +92,7 @@ APATH="a:b" sourceall # will source a/* and b/*
 APATH="$PWD" sourceall zsh # will source ./*.zsh
 ```
 
-##### PVE #####
+##### PVE (**DEPRECATED**) #####
 Manages python virtual environments.
 
 Synopsis: `pve [-p custom_directory] [-d] [-l | -s | venv name]`
