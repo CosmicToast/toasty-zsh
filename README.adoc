@@ -146,7 +146,7 @@ Toasty:: Written from scratch by me, but takes heavy inspiration from robbyrusse
 
 === Licenses
 
-- Oh My Zsh link::{license-omz}[LICENSE]
-- Pure link::{license-pure}[LICENSE]
-- Purer link::{license-purer}[LICENSE]
-- Shellder link::{license-shellder}[LICENSE]
+- Oh My Zsh link:{license-omz}[LICENSE]
+- Pure link:{license-pure}[LICENSE]
+- Purer link:{license-purer}[LICENSE]
+- Shellder link:{license-shellder}[LICENSE]
