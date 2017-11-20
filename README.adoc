@@ -1,0 +1,152 @@
+:icons: font
+:source-highlighter: pygments
+:toc: preamble
+
+// Links
+:license: LICENSE.md
+:example: examples/zshrc.local
+
+:img-license: https://img.shields.io/github/license/5pacetoast/toasty-zsh.svg
+
+:license-omz: third-party-licenses/LICENSE.OMZ.md
+:license-pure: third-party-licenses/LICENSE.pure.txt
+:license-purer: third-party-licenses/LICENSE.purer.txt
+:license-shellder: third-party-licenses/LICENSE.shellder.txt
+
+:repo-omz: https://github.com/robbyrussell/oh-my-zsh[Oh My Zsh]
+:repo-pure: https://github.com/sindresorhus/pure[Pure]
+:repo-purer: https://github.com/dfurnes/purer[Purer]
+:repo-shellder: https://github.com/simnalamburt/shellder[Shellder]
+
+:sprunge: http://sprunge.us[Sprunge]
+:zshwiki: http://zshwiki.org[Zsh Wiki]
+
+= Toasty Zsh
+
+image::{img-license}[License, link={license}]
+
+The zsh framework made to facilitate management, not dictate it.
+
+== Quickstart
+1. Clone this repository somewhere
+2. `ln -s $PWD/zshrc ~/.zshrc`
+3. `install -Dm 644 {example} -t ~/.zsh`
+4. Restart your z shell
+
+=== Expanding on it
+- Drop files you want to be sourced during startup into `$zd/source/`
+- Drop functions you want to potentially use/autoload into `$zd/functions/`
+- Drop plugins you want to source on-demand into `$zd/plugins/`
+- Drop custom completions into `$zd/completions/`
+- Drop custom prompts into `$zd/prompts/`
+
+NOTE: Most of these are for mindspace separation, the completions, prompts and functions directories are functionally identical, and as such you can use any of them for any purpose.
+
+WARNING: Don't run compinit yourself! It happens at the very end (after sourcing `zshrc.local`) as is. All it'll do is make your performance worse.
+
+== Structure
+Toasty Zsh provides a structure under `~/.zsh` for you to use. Everything except `zshrc.local` is optional.
+
+`$zshd`:: Dynamically set to wherever the Toasty Zsh repository copy is.
+`$zd`:: Your "Z Directory". Set to `~/.zsh` by default. The rest of this list is inside of this.
+completions/:: Added to your `$fpath`. Serves to put custom completions into without muddying up your functions.
+functions/:: Added to your `$fpath`. Serves to put your functions into, for autoloading.
+plugins/:: Added to your `$spath`. Serves for optionally-sourced plugins. See <<Autosource>> for more details.
+prompts/:: Added to your `$fpath`. Serves to throw your custom prompts into without muddying up your functions.
+source/:: Added to your `$apath`. Serves for automatic sourcing on-demand/startup. See <<Sourceall>> for more details.
+pre:: Sourced right before running <<Sourceall>>, giving you a chance to edit the sane-default `${fpath,spath,apath}` values.
+zshrc.local:: Sourced right before compinit.
+
+== API
+=== Functions
+Various functions for use. Some are used internally.
+
+NOTE: Enabling (autoloading) a function in zsh defers loading - it makes the function available from the moment you do it, but it won't be actually loaded until you first use it, making them much more efficient than sourced files.
+
+==== Autosource
+Iterates over `$SPATH` until it finds a matching `$1`, then sources it.
+
+Examples:
+[source,sh]
+----
+SPATH="$PWD" autosource a # <1>
+SPATH="./a:./b" autosource c # <2>
+SPATH="$PWD" autosource foo/bar # <3>
+----
+<1> will source `./a` if it exists
+<2> will source `./a/c`, and then `./b/c` if that fails
+<3> will source `./foo/bar` if it exists
+
+WARNING: Relative entries will always be relative. If you set `$SPATH` to `.` and then change directories, it'll continue using `.`, which is potentially insecure.
+
+==== Sourceall
+Will source every file in every directory in `$APATH`. If an argument is provided, will only source files that end in `.$1`.
+
+Examples:
+[source,sh]
+----
+APATH="a:b" sourceall # <1>
+APATH="$PWD" sourceall zsh # <2>
+----
+<1> will source `a/*` and `b/*`
+<2> will source `./*.zsh`
+
+NOTE: By default, Toasty Zsh will run `sourceall zsh` between sourcing `$zd/pre` and `zshrc.local`. By default, it only goes through `$zshd/source` and `$zd/source`. You can customize this behavior in `$zd/pre`.
+
+WARNING: Sourceall does not recurse into subdirectories, though you can work around that by adding a `99-subdir.zsh` file or similar where you call it with a custom `$APATH` set.
+
+==== Sprunge
+Simple wrapper around {sprunge}. Takes things in stdin, outputs the url into stdout.
+
+Examples:
+[source,sh]
+----
+echo hi | sprunge # <1>
+sprunge < file # <2>
+bsdtar -cf - --format shar dir | sprunge # <3>
+----
+<1> upload `"hi\n"` to sprunge.us
+<2> upload file to sprunge.us
+<3> upload a "shar" archive of dir to sprunge.us
+
+=== Plugins
+Plugins are just files you source! See <<Autosource>> for a convenient way to do so.
+
+You can add your own by dropping them into a directory in your `$spath` (such as  `$zd/plugins`).
+
+==== Sudo
+Press `<esc>` twice to either add or remove `sudo` from the beginning of your line.
+
+If the current line is empty, operates on the previous line instead.
+
+==== Xterm-Title
+Sets up a simple hook system to print what's currently being executed into an xterm-compatible terminal's title.
+
+WARNING: some prompts (such as {repo-pure}[Pure]) do this for you aleady! If you use both, they won't conflict, but you'd be wasting cycles *and* might see some strange text flashing through on every command.
+
+== External Projects
+I didn't write everything in here, some of it is bundled.
+
+Note that you do not pay (except with drive space) for most of these unless you choose to use them.
+
+=== Plugins
+
+Sudo:: From {repo-omz}.
+
+=== Prompts
+
+Pure:: From {repo-pure}.
+Purer:: From {repo-purer}.
+Shellder:: From {repo-shellder}.
+Toasty:: Written from scratch by me, but takes heavy inspiration from robbyrussel's theme from {repo-omz}.
+
+=== Other
+
+`bindkeys.zsh`:: Written by me, but heavily inspired by similar content from {repo-omz} and the {zshwiki}.
+
+=== Licenses
+
+- Oh My Zsh link::{license-omz}[LICENSE]
+- Pure link::{license-pure}[LICENSE]
+- Purer link::{license-purer}[LICENSE]
+- Shellder link::{license-shellder}[LICENSE]
