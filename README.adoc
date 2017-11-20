@@ -122,7 +122,7 @@ If the current line is empty, operates on the previous line instead.
 ==== Xterm-Title
 Sets up a simple hook system to print what's currently being executed into an xterm-compatible terminal's title.
 
-WARNING: some prompts (such as {repo-pure}[Pure]) do this for you aleady! If you use both, they won't conflict, but you'd be wasting cycles *and* might see some strange text flashing through on every command.
+WARNING: some prompts (such as {repo-pure}) do this for you aleady! If you use both, they won't conflict, but you'd be wasting cycles *and* might see some strange text flashing through on every command.
 
 == External Projects
 I didn't write everything in here, some of it is bundled.
