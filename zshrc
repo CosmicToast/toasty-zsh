@@ -1,7 +1,6 @@
-# this should only be used as the zshrc, so this is fine
-zrc="$HOME/.zshrc"
-zrc="$zrc:A"
-. "$zrc:h/config"
+print -Pv zrc %N  # get current file location, store it in $zrc
+zrc="$zrc:A"      # resolve $zrc (assume path) to its absolute location
+. "$zrc:h/config" # in the directory that $zrc is in, source ./config
 
 # spath -> autosource path, ala plugins
 # apath -> sourceall path, for .d dirs
