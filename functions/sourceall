@@ -1,37 +1,17 @@
 sourceall() {
-    # shells tend to respect local, or namespace variables
-    local reset=
-    local p=
+    local ext=""
     local f=
-
-    # IFS reset for shells that don't handle it properly
-    [ -n "$ZSH_VERSION" ] &&
-        ! (setopt | grep -qF shwordsplit) &&
-        local reset='setopt noshwordsplit'
+    local p=
 
     # calling `sourceall zsh` will source *.zsh, otherwise *
-    [ $# -gt 0 ] && local ext=".$1" || local ext=""
+    (( $# > 0 )) && ext=".$1"
 
-    # see first block, but IFS is avoided until it's required
-    local IFS=:
-
-    # zsh doesn't split things the way most shells do
-    [ -n "$ZSH_VERSION" ] && setopt shwordsplit
-
-    for p in $APATH
+    for p in $apath
     do
-        # no need for IFS now that APATH is expanded
-        eval "$reset"
-
-        # if $p doesn't exist, we can skip recursing it
-        [ -d "$p" ] || continue
-
-        # make sure we have matches, without recursing in
-        [ -z "$(find $p/. ! -name . -prune -type f -name '*'$ext)" ] && continue
-
-        for f in "$p/"*"$ext"
+        [[ -d $p ]] || continue
+        for f in "$p"/*"$ext"(.N)
         do
-            [ -f "$f" ] && . "$f"
+            [[ -r $f ]] && . "$f"
         done
     done
 }
