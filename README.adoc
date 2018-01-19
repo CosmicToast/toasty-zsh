@@ -88,36 +88,40 @@ Various functions for use. Some are used internally.
 NOTE: Enabling (autoloading) a function in zsh defers loading - it makes the function available from the moment you do it, but it won't be actually loaded until you first use it, making them much more efficient than sourced files.
 
 ==== Autosource
-Iterates over `$SPATH` until it finds a matching `$1`, then sources it.
+Iterates over `$spath` until it finds a matching `$1`, then sources it.
 
 Examples:
 [source,sh]
 ----
-SPATH="$PWD" autosource a # <1>
-SPATH="./a:./b" autosource c # <2>
-SPATH="$PWD" autosource foo/bar # <3>
+spath=( "$PWD" ) autosource a # <1>
+spath=( a b ) autosource c # <2>
+spath=( "$PWD" ) autosource foo/bar # <3>
 ----
 <1> will source `./a` if it exists
 <2> will source `./a/c`, and then `./b/c` if that fails
 <3> will source `./foo/bar` if it exists
 
-WARNING: Relative entries will always be relative. If you set `$SPATH` to `.` and then change directories, it'll continue using `.`, which is potentially insecure.
+WARNING: Relative entries will always be relative. If you set `$spath` to `.` and then change directories, it'll continue using `.`, which is potentially insecure.
+
+NOTE: For convenience's sake, `$spath` and `$SPATH` are bound - you can manipulate `$SPATH` (which is formatted like `$PATH`) to modify `$spath`.
 
 ==== Sourceall
-Will source every file in every directory in `$APATH`. If an argument is provided, will only source files that end in `.$1`.
+Will source every file in every directory in `$apath`. If an argument is provided, will only source files that end in `.$1`.
 
 Examples:
 [source,sh]
 ----
-APATH="a:b" sourceall # <1>
-APATH="$PWD" sourceall zsh # <2>
+apath=( a b ) sourceall # <1>
+apath=( "$PWD" ) sourceall zsh # <2>
 ----
 <1> will source `a/*` and `b/*`
 <2> will source `./*.zsh`
 
 NOTE: By default, Toasty Zsh will run `sourceall zsh` between sourcing `$zd/pre` and `zshrc.local`. By default, it only goes through `$zshd/source` and `$zd/source`. You can customize this behavior in `$zd/pre`.
 
-WARNING: Sourceall does not recurse into subdirectories, though you can work around that by adding a `99-subdir.zsh` file or similar where you call it with a custom `$APATH` set.
+WARNING: Sourceall does not recurse into subdirectories, though you can work around that by adding a `99-subdir.zsh` file or similar where you call it with a custom `$apath` set.
+
+NOTE: As with `$spath`, `$apath` is bound to a `$PATH`-like `$APATH`.
 
 ==== Sprunge
 Simple wrapper around {sprunge}. Takes things in stdin, outputs the url into stdout.
