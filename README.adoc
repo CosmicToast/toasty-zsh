@@ -38,7 +38,7 @@ The zsh framework made to facilitate management, not dictate it.
 
 == Quickstart
 1. Clone this repository somewhere
-2. `ln -s $PWD/zshrc ~/.zshrc`
+2. `ln -s $PWD/zshrc ~/.zshrc` *or* `echo "source $PWD/zshrc" > ~/.zshrc`
 3. `install -Dm 644 {example} -t ~/.zsh`
 4. Restart your z shell
 
