@@ -368,6 +368,7 @@ prompt_pure_setup() {
 	fi
 
 	# register custom function for vim-mode
+	zle -N zle-line-init prompt_purer_vim_mode
 	zle -N zle-keymap-select prompt_purer_vim_mode
 
 	# show username@host if logged in through SSH
