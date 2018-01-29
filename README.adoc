@@ -17,6 +17,7 @@
 :repo-pure: https://github.com/sindresorhus/pure[Pure]
 :repo-purer: https://github.com/dfurnes/purer[Purer]
 :repo-shellder: https://github.com/simnalamburt/shellder[Shellder]
+:repo-liquidprompt: https://github.com/nojhan/liquidprompt[Liquid Prompt]
 
 :sprunge: http://sprunge.us[Sprunge]
 :zshwiki: http://zshwiki.org[Zsh Wiki]
@@ -148,6 +149,7 @@ Pure:: From {repo-pure}.
 Purer:: From {repo-purer}.
 Shellder:: From {repo-shellder}.
 Toasty:: Written from scratch by me, but takes heavy inspiration from robbyrussel's theme from {repo-omz}.
+Wet:: Modified toasty by aditya3098, but takes heavy inspiration from {repo-liquidprompt}.
 
 === Other
 
