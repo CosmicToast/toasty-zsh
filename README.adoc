@@ -65,6 +65,7 @@ WARNING: This may, however, dirty your repository, depending on what `$ZDOTDIR` 
 ==== Global
 - Cloning toasty-zsh into `/etc/zsh` (on distributions with sane/common zsh defaults).
 - Sourcing `zshrc` in `/etc/zsh/zshrc`.
+- Linking `zshrc` to `/etc/zsh/zshrc`.
 
 WARNING: You may want to `touch ~/.zshrc` when installing globally, to avoid zsh complaining about it being missing.
 
