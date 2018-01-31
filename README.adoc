@@ -52,6 +52,8 @@ NOTE: Most of these are for mindspace separation, the completions, prompts and f
 
 WARNING: Don't run compinit yourself! It happens at the very end (after sourcing `zshrc.local`) as is. All it'll do is make your performance worse.
 
+NOTE: If you want `$zd` to be anywhere but `~/.zsh`, set it in `~/.zshenv`.
+
 === Full List of Supported Installation Methods
 ==== Local
 - Setting `$ZDOTDIR` (usually in `~/.zshenv`) to point to the repository.
