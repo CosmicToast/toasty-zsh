@@ -1,7 +1,8 @@
 print -Pv zrc %N  # get current file location, store it in $zrc
 zrc="$zrc:A"      # resolve $zrc (assume path) to its absolute location
 zshd="${zrc:h}"
-zd="$HOME/.zsh"
+
+: "${zd:=$HOME/.zsh}"
 
 # spath -> autosource path, ala plugins
 # apath -> sourceall path, for .d dirs
