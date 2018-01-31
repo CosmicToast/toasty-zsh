@@ -38,9 +38,8 @@ The zsh framework made to facilitate management, not dictate it.
 
 == Quickstart
 1. Clone this repository somewhere
-2. `ln -s $PWD/zshrc ~/.zshrc` *or* `echo "source $PWD/zshrc" > ~/.zshrc`
-3. `install -Dm 644 {example} -t ~/.zsh`
-4. Restart your z shell
+2. `echo ZDOTDIR=/path/to/repo > ~/.zshenv`
+3. Restart your z shell
 
 === Expanding on it
 - Drop files you want to be sourced during startup into `$zd/source/`
@@ -52,6 +51,22 @@ The zsh framework made to facilitate management, not dictate it.
 NOTE: Most of these are for mindspace separation, the completions, prompts and functions directories are functionally identical, and as such you can use any of them for any purpose.
 
 WARNING: Don't run compinit yourself! It happens at the very end (after sourcing `zshrc.local`) as is. All it'll do is make your performance worse.
+
+=== Full List of Supported Installation Methods
+==== Local
+- Setting `$ZDOTDIR` (usually in `~/.zshenv`) to point to the repository.
++
+WARNING: This may, however, dirty your repository, depending on what `$ZDOTDIR` ends up being used for.
+- Sourcing `zshrc` in `~/.zshrc`.
+- Linking `zshrc` to `~/.zshrc`.
+
+==== Global
+- Cloning toasty-zsh into `/etc/zsh` (on distributions with sane/common zsh defaults).
+- Sourcing `zshrc` in `/etc/zsh/zshrc`.
+
+WARNING: You may want to `touch ~/.zshrc` when installing globally, to avoid zsh complaining about it being missing.
+
+NOTE: If you have a global install of toasty-zsh, or some other framework, and have a local version, you can `setopt NO_GLOBAL_RCS` in `~/.zshenv` to skip loading the global variant.
 
 == Structure
 Toasty Zsh provides a structure under `~/.zsh` for you to use. Everything except `zshrc.local` is optional.
