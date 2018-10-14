@@ -97,6 +97,11 @@ prompt_pure_preexec() {
 
 	# shows the current dir and executed command in the title while a process is active
 	prompt_pure_set_title 'ignore-escape' "$PWD:t: $2"
+
+	# Disallow python virtualenv from updating the prompt, set it to 12 if
+	# untouched by the user to indicate that Pure modified it. Here we use
+	# magic number 12, same as in psvar.
+	export VIRTUAL_ENV_DISABLE_PROMPT=${VIRTUAL_ENV_DISABLE_PROMPT:-12}
 }
 
 # string length ignoring ansi escapes
@@ -135,6 +140,8 @@ prompt_pure_preprompt_render() {
 
 	local symbol_color="%(?.${PURE_PROMPT_SYMBOL_COLOR:-magenta}.red)"
 
+	# show virtual env
+	preprompt+="%(12V.%F{242}%12v%f .)"
 	# begin with symbol, colored by previous command exit code
 	preprompt+="%F{$symbol_color}${PURE_PROMPT_SYMBOL:-❯}%f "
 	# directory, colored by vim status
@@ -186,6 +193,19 @@ prompt_pure_precmd() {
 
 	# preform async git dirty check and fetch
 	prompt_pure_async_tasks
+
+	# Check if we should display the virtual env, we use a sufficiently high
+	# index of psvar (12) here to avoid collisions with user defined entries.
+	psvar[12]=
+	# When VIRTUAL_ENV_DISABLE_PROMPT is empty, it was unset by the user and
+	# Pure should take back control.
+	if [[ -n $VIRTUAL_ENV ]] && [[ -z $VIRTUAL_ENV_DISABLE_PROMPT || $VIRTUAL_ENV_DISABLE_PROMPT = 12 ]]; then
+		psvar[12]="${VIRTUAL_ENV:t}"
+		export VIRTUAL_ENV_DISABLE_PROMPT=12
+	fi
+
+	# print the preprompt
+	prompt_pure_preprompt_render "precmd"
 
 	# Increment command counter
   PURER_PROMPT_COMMAND_COUNT=$((PURER_PROMPT_COMMAND_COUNT+1))
