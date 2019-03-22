@@ -18,6 +18,7 @@
 :repo-purer: https://github.com/dfurnes/purer[Purer]
 :repo-shellder: https://github.com/simnalamburt/shellder[Shellder]
 
+:brpaste: https://brpaste.xyz[BRPaste]
 :sprunge: http://sprunge.us[Sprunge]
 :zshwiki: http://zshwiki.org[Zsh Wiki]
 
@@ -125,6 +126,24 @@ NOTE: By default, Toasty Zsh will run `sourceall zsh` between sourcing `$zd/pre`
 WARNING: Sourceall does not recurse into subdirectories, though you can work around that by adding a `99-subdir.zsh` file or similar where you call it with a custom `$apath` set.
 
 NOTE: As with `$spath`, `$apath` is bound to a `$PATH`-like `$APATH`.
+
+==== Brpaste
+Simple wrapper around {brpaste}.
+Takes thing in stdin, or uses the first argument as the file to upload.
+Outputs the paste url.
+
+Examples:
+[source,sh]
+----
+echo hi | brpaste # <1>
+brpaste file # <2>
+bsdtar -cf- --format shar dir | brpaste # <3>
+brpaste file | xsel -ib # <4>
+----
+<1> upload "hi\n" to brpaste.xyz
+<2> upload file to brpaste.xyz
+<3> upload a "shar" archive of dir to brpaste.xyz
+<4> upload file to brpaste.xyz and place the non-raw link into the clipboard
 
 ==== Sprunge
 Simple wrapper around {sprunge}. Takes things in stdin, outputs the url into stdout.
