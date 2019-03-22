@@ -1,3 +1,4 @@
 *.zwc
 .zcompdump
+.zdirs
 .zprofile
