@@ -34,6 +34,14 @@ fpath+=(
 # should be the location to edit fpath/apath/spath
 [ -f "$zd/pre" ] && . "$zd/pre"
 
+# allow digest drop-in
+if [ -d "$zd/digests" ]; then
+    for f in $zd/digests/*.zwc(N); do
+        fpath+=( "$f" )
+        autoload -w "$f"
+    done
+fi
+
 autoload sourceall
 sourceall zsh # source every .zsh file in every $apath[@] directory
 
