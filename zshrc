@@ -32,10 +32,11 @@ fpath+=(
 
 # sourced before sourcealling
 # should be the location to edit fpath/apath/spath
-[ -f "$zd/pre" ] && . "$zd/pre"
+[[ -f "$zd/pre" ]] && . "$zd/pre"
 
 # allow digest drop-in
-if [ -d "$zd/digests" ]; then
+if [[ -d "$zd/digests" ]]; then
+    local f=
     for f in $zd/digests/*.zwc(N); do
         fpath+=( "$f" )
         autoload -w "$f"
@@ -46,7 +47,7 @@ autoload sourceall
 sourceall zsh # source every .zsh file in every $apath[@] directory
 
 # local zshrc
-[ -f "$zd/zshrc.local" ] && . "$zd/zshrc.local"
+[[ -f "$zd/zshrc.local" ]] && . "$zd/zshrc.local"
 
 # LITERALLY THE VERY LAST THING WE DO IS COMPINIT PLS DUN DO IT URSELF
 autoload -Uz compinit
