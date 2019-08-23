@@ -1,5 +1,2 @@
-function sprunge {
-    curl -F 'sprunge=<-' http://sprunge.us
-}
-
-# vim: ft=zsh
+#!/bin/zsh
+curl -F 'sprunge=<-' http://sprunge.us

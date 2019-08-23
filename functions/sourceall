@@ -1,19 +1,16 @@
-sourceall() {
-    local ext=""
-    local f=
-    local p=
+#!/bin/zsh
+local ext=
+local f=
+local p=
 
-    # calling `sourceall zsh` will source *.zsh, otherwise *
-    (( $# > 0 )) && ext=".$1"
+# calling `sourceall zsh` will source *.zsh, otherwise *
+(( $# > 0 )) && ext=".$1"
 
-    for p in $apath
+for p in $apath
+do
+    [[ -d $p ]] || continue
+    for f in $p/*$ext(.N)
     do
-        [[ -d $p ]] || continue
-        for f in "$p"/*"$ext"(.N)
-        do
-            [[ -r $f ]] && . "$f"
-        done
+        [[ -r $f ]] && . $f
     done
-}
-
-# vim: ft=sh
+done

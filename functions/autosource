@@ -1,13 +1,10 @@
-autosource() {
-    local f=
-    local p=
-    for f in $argv
+#!/bin/zsh
+local f=
+local p=
+for f
+do
+    for p in $spath
     do
-        for p in $spath
-        do
-            [[ -r $p/$f ]] && . "$p/$f" && break
-        done
+        [[ -r $p/$f ]] && . "$p/$f" && break
     done
-}
-
-# vim: ft=sh
+done
