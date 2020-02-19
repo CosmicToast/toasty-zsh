@@ -29,6 +29,11 @@ fpath+=(
     $zshd/completions
     $zshd/prompts
 )
+# you can use your functions as standalone scripts without autoloading them
+# just +x
+path+=(
+    $zd/functions
+)
 
 # sourced before sourcealling
 # should be the location to edit fpath/apath/spath
